@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .clear {
+            float: right;
+        }
+    </style>
+    <h1>Blog</h1>
+    <form method="GET" action="">
+        <div class="clear"> <h4> Czyszczenie</h4>
+            <input type="text" id="DoUsuniecia" size="24" placeholder="Wpisz tytul artykulu do usuniecia">
+             <input type="button" value="Czysc" id="czysc"> </div>
+      Tytul artykulu:  <input type="text" name="tytul" id="tytulart">  <br>
+       Tresc artykulu:<br> <textarea id="trescart" rows="8" cols="54"> </textarea> <br> 
+     Autor artykulu:  <input type="text" name="autor" id="autor"> <br>
+     Jestem zajawkowiczem <input type="checkbox" id="check"> <br>
+       <input type="button" onclick="dodawanie(this.form)" value="Dodaj artykul" id="dodaj"> <br> <br>
+    </form>
+    <p id="test"> </p>
+    <script>
+
+        function dodawanie(form) {
+
+       var valuetytul = form.tytulart.value;
+       var valuetresc = form.trescart.value;
+       var valueautor = form.autor.value;
+       var valuezajawka = document.getElementById("check");
+       if(valuetytul === null || valuetresc === null || valueautor === null) {
+     document.write("lipa");
+       } else if(valuezajawka.checked) document.getElementById("test").innerHTML = "Twoj artykul zostal dodany pomyslnie: <br> <br> Artykuł <em>" + valuetytul + "</em> o treści: <em>" + valuetresc + "</em> autorstwa <em>" + valueautor + "</em><br>Data dodania: <b>" + Date()+"</b>" + "<br> Autor to niezly zajawkowicz.";
+    else document.getElementById("test").innerHTML = "Twoj artykul zostal dodany pomyslnie: <br> <br> Artykuł <em>" + valuetytul + "</em> o treści: <em>" + valuetresc + "</em> autorstwa <em>" + valueautor + "</em><br>Data dodania: <b>" + Date()+"</b> Autor nie jest zajawkowiczem."
+    
+    
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .clear {
+            float: right;
+        }
+    </style>
+    <h1>Blog</h1>
+    <form method="GET" action="">
+        <div class="clear"> <h4> Czyszczenie</h4>
+            <input type="text" id="DoUsuniecia" size="24" placeholder="Wpisz tytul lub ID artykulu do usuniecia">
+            <input type="button" value="Czysc" id="czysc" onclick="usunArtykul()"> 
+        </div>
+        Tytul artykulu:  <input type="text" name="tytul" id="tytulart">  <br>
+        Tresc artykulu:<br> <textarea id="trescart" rows="8" cols="54"> </textarea> <br> 
+        Autor artykulu:  <input type="text" name="autor" id="autor"> <br>
+        Jestem zajawkowiczem <input type="checkbox" id="check"> <br>
+        <input type="button" onclick="dodawanie(this.form)" value="Dodaj artykul" id="dodaj"> <br> <br>
+    </form>
+    <div id="artykuly"></div>
+    <p id="test"> </p>
+    <script>
+        let artykuly = [];
+        let idCounter = 0;
+
+        function dodawanie(form) {
+            const valuetytul = form.tytulart.value;
+            const valuetresc = form.trescart.value;
+            const valueautor = form.autor.value;
+            const valuezajawka = document.getElementById("check").checked;
+            const id = idCounter++;
+
+            if (!valuetytul || !valuetresc || !valueautor) {
+                document.getElementById("test").innerHTML = "Wszystkie pola muszą być wypełnione.";
+                return;
+            }
+
+            const artykul = {
+                id,
+                tytul: valuetytul,
+                tresc: valuetresc,
+                autor: valueautor,
+                zajawka: valuezajawka
+            };
+
+            artykuly.push(artykul);
+            wyswietlArtykuly();
+        }
+
+        function wyswietlArtykuly() {
+            const artykulyDiv = document.getElementById("artykuly");
+            artykulyDiv.innerHTML = '';
+
+            artykuly.forEach(artykul => {
+                const artykulDiv = document.createElement("div");
+                artykulDiv.id = `artykul-${artykul.id}`;
+                artykulDiv.innerHTML = `
+                    <h3>${artykul.tytul} (ID: ${artykul.id})</h3>
+                    <p>${artykul.tresc}</p>
+                    <p><em>${artykul.autor}</em></p>
+                    <p>${artykul.zajawka ? "Autor to niezly zajawkowicz." : "Autor nie jest zajawkowiczem."}</p>
+                    <button onclick="edytujArtykul(${artykul.id})">Edytuj</button>
+                `;
+                artykulyDiv.appendChild(artykulDiv);
+            });
+        }
+
+        function usunArtykul() {
+            const doUsuniecia = document.getElementById("DoUsuniecia").value;
+            artykuly = artykuly.filter(artykul => artykul.tytul !== doUsuniecia && artykul.id !== parseInt(doUsuniecia));
+            wyswietlArtykuly();
+        }
+
+        function edytujArtykul(id) {
+            const artykul = artykuly.find(art => art.id === id);
+            if (artykul) {
+                document.getElementById("tytulart").value = artykul.tytul;
+                document.getElementById("trescart").value = artykul.tresc;
+                document.getElementById("autor").value = artykul.autor;
+                document.getElementById("check").checked = artykul.zajawka;
+
+                usunArtykulById(id);
+            }
+        }
+
+        function usunArtykulById(id) {
+            artykuly = artykuly.filter(artykul => artykul.id !== id);
+            wyswietlArtykuly();
+        }
+    </script>
+</body>
+</html>
