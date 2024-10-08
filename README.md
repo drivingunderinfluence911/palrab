@@ -1,4 +1,5 @@
-# palrab
-group repository
+# artykulyENHANCED
+napisalem to za pomoca kopilota
 
-# siemanko
+# artykuly
+zrobilem se sam
